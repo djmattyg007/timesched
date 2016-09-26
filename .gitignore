@@ -1,5 +1,5 @@
-/_deploy/
 .DS_Store
 
+/release/
 /lib/generated/
 !/lib/generated/.gitkeep

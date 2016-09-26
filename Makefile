@@ -25,14 +25,14 @@ download-timezone-info:
 lib/generated/data.js: data/*.json
 	python3 data/convert.py
 
-prepare-deploy: clean
-	mkdir _deploy
-	cp timesched.html _deploy/index.html
-	cp -R lib _deploy
-	cp -R static _deploy
-	find _deploy -name '.git*' -print -delete
+prepare-release: clean compress
+	mkdir release
+	cp timesched.html release/index.html
+	cp -R lib release
+	cp -R static release
+	find release -name '.git*' -print -delete
 
 clean:
-	rm -rf _deploy
+	rm -rf release
 
-.PHONY: compress download-timezone-info prepare-deploy clean
+.PHONY: compress download-timezone-info prepare-release clean
