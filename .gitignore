@@ -1,2 +1,5 @@
-_build
+/_deploy/
 .DS_Store
+
+/lib/generated/
+!/lib/generated/.gitkeep

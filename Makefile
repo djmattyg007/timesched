@@ -1,7 +1,7 @@
 all: compress
 
 compress: lib/generated/data.js
-	node_modules/uglify-js/bin/uglifyjs \
+	uglifyjs \
 		lib/jquery.js \
 		lib/jquery-ui.js \
 		lib/angular.js \
@@ -13,7 +13,7 @@ compress: lib/generated/data.js
 		lib/moment-timezone.js \
 		lib/typeahead.js \
 			-c > lib/generated/compressed.js
-	node_modules/uglify-js/bin/uglifyjs \
+	uglifyjs \
 		lib/generated/data.js \
 		-c > lib/generated/data-compressed.js
 
@@ -23,15 +23,16 @@ download-timezone-info:
 	wget http://unicode.org/repos/cldr/trunk/common/supplemental/supplementalData.xml -O data/supplemental_data.xml
 
 lib/generated/data.js: data/*.json
-	python data/convert.py
+	python3 data/convert.py
 
-upload:
-	rm -rf _deploy
+prepare-deploy: clean
 	mkdir _deploy
 	cp timesched.html _deploy/index.html
 	cp -R lib _deploy
 	cp -R static _deploy
-	rsync -a _deploy/ flow.srv.pocoo.org:/srv/websites/timesched.pocoo.org/static
+	find _deploy -name '.git*' -print -delete
+
+clean:
 	rm -rf _deploy
 
-.PHONY: compress download-timezone-info upload
+.PHONY: compress download-timezone-info prepare-deploy clean
